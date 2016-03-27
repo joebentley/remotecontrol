@@ -71,10 +71,10 @@ $(function() {
 	if (pos.y < 0) {
 	    pos.y = 0;
 	}
-	if (pos.x > 1 - deadzone) {
+	if (pos.x > 1) {
 	    pos.x = 1;
 	}
-	if (pos.y > 1 - deadzone) {
+	if (pos.y > 1) {
 	    pos.y = 1;
 	}
 

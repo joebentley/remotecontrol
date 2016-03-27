@@ -65,6 +65,8 @@ $(function() {
 	pos.x = (pos.x - deadzone) * (1 / (1 - deadzone));
 	pos.y = (pos.y - deadzone) * (1 / (1 - deadzone));
 
+	console.log(pos.x + ' ' + pos.y);
+
 	// Set deadzones
 	if (pos.x < 0) {
 	    pos.x = 0;
@@ -72,10 +74,10 @@ $(function() {
 	if (pos.y < 0) {
 	    pos.y = 0;
 	}
-	if (pos.x > 1 - deadzone) {
+	if (pos.x > 1) {
 	    pos.x = 1;
 	}
-	if (pos.y > 1 - deadzone) {
+	if (pos.y > 1) {
 	    pos.y = 1;
 	}
 
