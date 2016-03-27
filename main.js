@@ -40,12 +40,10 @@ $(function() {
     $('#trackpad')[0].addEventListener('touchmove', function(e) {
 	e.preventDefault();
 
-	var delay = 1000;
+	var delay = 1;
 
 	// Wait at least `delay` milliseconds between each touch movement.
 	var now = new Date();
-
-	console.log(now.getTime() - then.getTime());
 
 	if (now.getTime() - then.getTime() < delay) {
 	    return;
