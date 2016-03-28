@@ -91,6 +91,17 @@ io.on('connection', function(socket) {
         robot.mouseClick();
        	console.log('clicked');
     });
+    
+    socket.on('dblclick', function() {
+        robot.mouseClick('left', true);
+    });
+    
+    socket.on('typing', function(totype) {
+        console.log(totype);
+        robot.typeString(totype);
+    });
+    
+    // TODO: key combinations
 });
 
 http.listen(3000, function() {

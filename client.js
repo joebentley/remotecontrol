@@ -74,4 +74,14 @@ $(function() {
     $('#click').click(function() {
         socket.emit('click');
     });
+    
+    $('#dblclick').click(function() {
+       socket.emit('dblclick'); 
+    });
+    
+    $('#sendtyping').click(function () {
+        var text = $('#typing').val();
+        $('#typing').val('');
+        socket.emit('typing', text);
+    });
 });
