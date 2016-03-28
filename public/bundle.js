@@ -15,6 +15,36 @@ $(function() {
 
     var touching = false;
 
+    var getPosition = function (touch) {
+	var pos = { x: touch.clientX, y: touch.clientY };
+
+	// Normalise to canvas size.
+	pos.x = pos.x / $('#trackpad').width();
+	pos.y = pos.y / $('#trackpad').height();
+
+	// Renormalise to dead zone
+	var deadzone = 0.2;
+
+	pos.x = (pos.x - deadzone) * (1 / (1 - deadzone));
+	pos.y = (pos.y - deadzone) * (1 / (1 - deadzone));
+
+	// Set deadzones
+	if (pos.x < 0) {
+	    pos.x = 0;
+	}
+	if (pos.y < 0) {
+	    pos.y = 0;
+	}
+	if (pos.x > 1) {
+	    pos.x = 1;
+	}
+	if (pos.y > 1) {
+	    pos.y = 1;
+	}
+
+	return pos;
+    };
+
     $('#trackpad').bind('mousedown', function() {
 	touching = true;
     });
@@ -29,11 +59,13 @@ $(function() {
     $('#trackpad')[0].addEventListener('touchstart', function(e) {
 	e.preventDefault();
 	touching = true;
+	socket.emit('touchstart', getPosition(e.touches[0]));
     }, false);
 
     $('#trackpad')[0].addEventListener('touchend', function(e) {
 	e.preventDefault();
 	touching = false;
+	socket.emit('touchend', getPosition(e.touches[0]));
     }, false);
 
     var then = new Date();
@@ -53,33 +85,7 @@ $(function() {
 	}
 	
 	var touch = e.touches[0];
-	var pos = { x: touch.clientX, y: touch.clientY };
-
-	// Normalise to canvas size.
-	pos.x = pos.x / $('#trackpad').width();
-	pos.y = pos.y / $('#trackpad').height();
-
-	// Renormalise to dead zone
-	var deadzone = 0.2;
-
-	pos.x = (pos.x - deadzone) * (1 / (1 - deadzone));
-	pos.y = (pos.y - deadzone) * (1 / (1 - deadzone));
-
-	console.log(pos.x + ' ' + pos.y);
-
-	// Set deadzones
-	if (pos.x < 0) {
-	    pos.x = 0;
-	}
-	if (pos.y < 0) {
-	    pos.y = 0;
-	}
-	if (pos.x > 1) {
-	    pos.x = 1;
-	}
-	if (pos.y > 1) {
-	    pos.y = 1;
-	}
+	var pos = getPosition(touch);
 
 	if (touching) {
 	    socket.emit('movement', pos);

@@ -14,44 +14,7 @@ $(function() {
 
     var touching = false;
 
-    $('#trackpad').bind('mousedown', function() {
-	touching = true;
-    });
-
-    $('#trackpad').bind('mouseup', function() {
-	touching = false;
-    });
-
-    $('#trackpad').bind('mousemove', function() {
-    });
-    
-    $('#trackpad')[0].addEventListener('touchstart', function(e) {
-	e.preventDefault();
-	touching = true;
-    }, false);
-
-    $('#trackpad')[0].addEventListener('touchend', function(e) {
-	e.preventDefault();
-	touching = false;
-    }, false);
-
-    var then = new Date();
-
-    $('#trackpad')[0].addEventListener('touchmove', function(e) {
-	e.preventDefault();
-
-	var delay = 1;
-
-	// Wait at least `delay` milliseconds between each touch movement.
-	var now = new Date();
-
-	if (now.getTime() - then.getTime() < delay) {
-	    return;
-	} else {
-	    then = new Date();
-	}
-	
-	var touch = e.touches[0];
+    var getPosition = function (touch) {
 	var pos = { x: touch.clientX, y: touch.clientY };
 
 	// Normalise to canvas size.
@@ -77,6 +40,51 @@ $(function() {
 	if (pos.y > 1) {
 	    pos.y = 1;
 	}
+
+	return pos;
+    };
+
+    $('#trackpad').bind('mousedown', function() {
+	touching = true;
+    });
+
+    $('#trackpad').bind('mouseup', function() {
+	touching = false;
+    });
+
+    $('#trackpad').bind('mousemove', function() {
+    });
+    
+    $('#trackpad')[0].addEventListener('touchstart', function(e) {
+	e.preventDefault();
+	touching = true;
+	socket.emit('touchstart', getPosition(e.touches[0]));
+    }, false);
+
+    $('#trackpad')[0].addEventListener('touchend', function(e) {
+	e.preventDefault();
+	touching = false;
+	socket.emit('touchend', getPosition(e.touches[0]));
+    }, false);
+
+    var then = new Date();
+
+    $('#trackpad')[0].addEventListener('touchmove', function(e) {
+	e.preventDefault();
+
+	var delay = 1;
+
+	// Wait at least `delay` milliseconds between each touch movement.
+	var now = new Date();
+
+	if (now.getTime() - then.getTime() < delay) {
+	    return;
+	} else {
+	    then = new Date();
+	}
+	
+	var touch = e.touches[0];
+	var pos = getPosition(touch);
 
 	if (touching) {
 	    socket.emit('movement', pos);
