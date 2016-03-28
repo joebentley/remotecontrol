@@ -34,16 +34,31 @@ $(function() {
 
     $('#trackpad').bind('mousemove', function() {
     });
+    
+    var tapTimer = new Date();
 
     $('#trackpad')[0].addEventListener('touchstart', function(e) {
         e.preventDefault();
         touching = true;
+        
+        tapTimer = new Date();
+        
         socket.emit('touchstart', getPosition(e.touches[0]));
     }, false);
 
     $('#trackpad')[0].addEventListener('touchend', function(e) {
         e.preventDefault();
         touching = false;
+        
+        // Send click if tap time short enough.
+        var delay = 100;
+        
+        var now = new Date();
+        
+        if (now.getTime() - tapTimer.getTime() < delay) {
+            socket.emit('click');
+        }
+        
         socket.emit('touchend', getPosition(e.touches[0]));
     }, false);
 
