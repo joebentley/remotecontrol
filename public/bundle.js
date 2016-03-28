@@ -22,26 +22,6 @@ $(function() {
 	pos.x = pos.x / $('#trackpad').width();
 	pos.y = pos.y / $('#trackpad').height();
 
-	// Renormalise to dead zone
-	var deadzone = 0.2;
-
-	pos.x = (pos.x - deadzone) * (1 / (1 - deadzone));
-	pos.y = (pos.y - deadzone) * (1 / (1 - deadzone));
-
-	// Set deadzones
-	if (pos.x < 0) {
-	    pos.x = 0;
-	}
-	if (pos.y < 0) {
-	    pos.y = 0;
-	}
-	if (pos.x > 1) {
-	    pos.x = 1;
-	}
-	if (pos.y > 1) {
-	    pos.y = 1;
-	}
-
 	return pos;
     };
 
