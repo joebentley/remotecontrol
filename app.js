@@ -115,6 +115,14 @@ io.on('connection', function(socket) {
         }
     });
     
+    socket.on('scrollup', function() {
+       robot.scrollMouse(5, 'up'); 
+    });
+    
+    socket.on('scrolldown', function() {
+       robot.scrollMouse(5, 'down'); 
+    });
+    
     socket.on('typing', function(totype) {
         console.log(totype);
         robot.typeString(totype);

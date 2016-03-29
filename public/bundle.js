@@ -99,12 +99,6 @@ $(function() {
        socket.emit('rightclick'); 
     });
     
-    $('#sendtyping').click(function () {
-        var text = $('#typing').val();
-        $('#typing').val('');
-        socket.emit('typing', text);
-    });
-    
     var clickHeld = false;
     
     $('#holdclick').click(function() {
@@ -117,6 +111,21 @@ $(function() {
        clickHeld = !clickHeld;
        socket.emit('toggleclick', clickHeld);
     });
+    
+    $('#scrollup').click(function () {
+        socket.emit('scrollup');
+    });
+    
+    $('#scrolldown').click(function () {
+        socket.emit('scrolldown');
+    });
+    
+    $('#sendtyping').click(function () {
+        var text = $('#typing').val();
+        $('#typing').val('');
+        socket.emit('typing', text);
+    });
+    
 });
 
 },{"fastclick":25,"jquery":30,"socket.io-client":35}],2:[function(require,module,exports){
