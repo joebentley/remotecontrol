@@ -95,6 +95,10 @@ $(function() {
        socket.emit('dblclick'); 
     });
     
+    $('#rightclick').click(function() {
+       socket.emit('rightclick'); 
+    });
+    
     $('#sendtyping').click(function () {
         var text = $('#typing').val();
         $('#typing').val('');

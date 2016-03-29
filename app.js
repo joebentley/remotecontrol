@@ -89,11 +89,17 @@ io.on('connection', function(socket) {
 
     socket.on('click', function() {
         robot.mouseClick();
-       	console.log('clicked');
+       	console.log('left clicked');
     });
     
     socket.on('dblclick', function() {
         robot.mouseClick('left', true);
+       	console.log('double clicked');
+    });
+    
+    socket.on('rightclick', function() {
+        robot.mouseClick('right', true);
+       	console.log('right clicked');
     });
     
     socket.on('typing', function(totype) {
