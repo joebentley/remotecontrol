@@ -6,6 +6,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var robot = require('robotjs');
 
+// Speed up mouse.
+robot.setMouseDelay(2);
+
 var screenSize = robot.getScreenSize();
 var height = screenSize.height;
 var width = screenSize.width;
