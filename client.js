@@ -103,4 +103,17 @@ $(function() {
         $('#typing').val('');
         socket.emit('typing', text);
     });
+    
+    var clickHeld = false;
+    
+    $('#holdclick').click(function() {
+       if (clickHeld) {
+           $('#holdclick').text('Hold');
+       } else {
+           $('#holdclick').text('Held');
+       }
+       
+       clickHeld = !clickHeld;
+       socket.emit('toggleclick', clickHeld);
+    });
 });

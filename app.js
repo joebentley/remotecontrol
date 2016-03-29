@@ -105,6 +105,16 @@ io.on('connection', function(socket) {
        	console.log('right clicked');
     });
     
+    socket.on('toggleclick', function(toggle) {
+        console.log(toggle);
+        
+        if (toggle) {
+            robot.mouseToggle('down', 'left');
+        } else {
+            robot.mouseToggle('up', 'left');
+        }
+    });
+    
     socket.on('typing', function(totype) {
         console.log(totype);
         robot.typeString(totype);
